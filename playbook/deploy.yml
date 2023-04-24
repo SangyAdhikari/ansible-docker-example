@@ -1,6 +1,6 @@
 ---
 - name: Deploy NGINX Docker Container
-  hosts: target_hosts
+  hosts: all
   become: true
 
   tasks:
