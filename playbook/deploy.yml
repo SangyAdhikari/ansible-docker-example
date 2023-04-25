@@ -36,14 +36,15 @@
 
      
         
-#     - name: Create Docker container
-#       docker_container:
-#         name: my-container
-#         image: ubuntu
+    - name: Create Docker container
+      docker_container:
+        name: my-container
+        image: ubuntu
         
-#         state: started
-#         ports:
-#           - "80:80"
+        state: started
+        ports:
+          - "80:80"
+        command: /bin/bash -c "apt-get update && apt-get install -y nginx && nginx -g 'daemon off;'"  
 
        
 
