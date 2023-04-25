@@ -1,0 +1,9 @@
+- hosts: 172.31.33.114
+  become: true
+  tasks:
+    - name: Create Docker container
+      docker_container:
+        name: my-container
+        image: ubuntu
+        command: sleep 3600
+        state: started
