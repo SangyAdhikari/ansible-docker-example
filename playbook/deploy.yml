@@ -1,6 +1,12 @@
 - hosts: 172.31.33.114
   become: true
-  
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install Docker library
+      pip:
+        name: docker
+        state: present
   
   tasks:
     - name: Install Docker dependencies
