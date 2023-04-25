@@ -1,7 +1,7 @@
 ---
 - name: Deploy NGINX Docker Container
   hosts: all
-  become: true
+  become: yes
 
   tasks:
     - name: Install Docker
