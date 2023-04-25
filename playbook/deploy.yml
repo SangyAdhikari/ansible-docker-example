@@ -36,12 +36,25 @@
 
      
         
-    - name: Create Docker container
-      docker_container:
-        name: my-container
-        image: ubuntu
+#     - name: Create Docker container
+#       docker_container:
+#         name: my-container
+#         image: ubuntu
         
-        state: started
+#         state: started
+#         ports:
+#           - "80:80"
+
+    - name: Pull Docker image
+      docker_image:
+        name: myapp:latest
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: myapp
+        image: myapp:latest
         ports:
-          - "80:80"
+          - "8080:80"
+        restart_policy: always
 
