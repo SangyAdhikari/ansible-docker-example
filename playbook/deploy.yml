@@ -1,6 +1,6 @@
 ---
 - name: Deploy NGINX Docker Container
-  hosts: all
+  hosts: 172.31.46.151
   become: yes
 
   tasks:
