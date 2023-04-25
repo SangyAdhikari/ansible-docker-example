@@ -40,7 +40,7 @@
       docker_container:
         name: my-container
         image: ubuntu
-        command: sleep 3600
+        
         state: started
         ports:
           - "80:80"
