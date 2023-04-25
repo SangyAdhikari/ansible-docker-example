@@ -26,11 +26,17 @@
         name: docker-ce
         state: present
 
+    
     - name: Create Docker container
       docker_container:
-        name: webserver
-        image: nginx
+        name: my-container
+        image: ubuntu
+        command: sleep 3600
+        state: started
+        env:
+          MY_VAR: my_value
+        volumes:
+          - /var/log:/var/log
         ports:
           - "80:80"
-        state: started
 
