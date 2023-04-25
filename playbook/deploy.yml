@@ -6,7 +6,7 @@
   tasks:
     - name: Install Docker
       apt:
-        name: docker.io
+        name: docker
         state: present
 
     - name: Pull NGINX Docker Image
