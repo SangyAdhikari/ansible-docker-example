@@ -28,9 +28,7 @@
         name: docker-ce
         state: present
 
-     - name: Install Docker library
-       pip:
-        name: docker
+     
         
     - name: Create Docker container
       docker_container:
