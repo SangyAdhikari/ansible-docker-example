@@ -42,10 +42,6 @@
         image: ubuntu
         command: sleep 3600
         state: started
-        env:
-          MY_VAR: my_value
-        volumes:
-          - /var/log:/var/log
         ports:
           - "80:80"
 
