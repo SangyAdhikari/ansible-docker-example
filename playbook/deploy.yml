@@ -1,7 +1,6 @@
 - hosts: 172.31.33.114
   become: true
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+  
   
   tasks:
     - name: Install Docker dependencies
@@ -29,7 +28,10 @@
         name: docker-ce
         state: present
 
-    
+     - name: Install Docker library
+       pip:
+        name: docker
+        
     - name: Create Docker container
       docker_container:
         name: my-container
