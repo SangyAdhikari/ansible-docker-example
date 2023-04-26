@@ -77,11 +77,8 @@
         name: docker-compose
         executable: pip3
 
-
-   
-  
-   
-
+    - name: Print Docker Compose version
+      command: docker-compose version
 
 
      
