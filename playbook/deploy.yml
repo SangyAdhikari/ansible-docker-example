@@ -44,7 +44,8 @@
         state: started
         ports:
           - "80:80"
-        command: /bin/bash -c "apt-get update && apt-get install -y nginx && nginx -g 'daemon off;'"  
+        apt-get update && apt-get install -y nginx && echo 'Hello, World!' > /var/www/html/index.html && nginx -g 'daemon off;'
+
 
        
 
