@@ -33,6 +33,19 @@
       apt:
         name: docker-ce
         state: present
+        
+    - name: Install Docker Compose
+      tasks:
+       - name: Install pip
+      apt:
+        name: python3-pip
+        update_cache: yes
+
+    - name: Install Docker Compose with pip
+      pip:
+        name: docker-compose
+        executable: pip3
+
 
      
         
