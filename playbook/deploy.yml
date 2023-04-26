@@ -1,42 +1,15 @@
-# - hosts: 172.31.32.84
-#   become: true
-#   vars:
-#     ansible_python_interpreter: /usr/bin/python3
-#   tasks:
-#     - name: Install Docker library
-#       pip:
-#         name: docker
-#         state: present
-  
-#   tasks:
-#     - name: Install Docker dependencies
-#       apt:
-#         name:
-#           - apt-transport-https
-#           - ca-certificates
-#           - curl
-#           - gnupg-agent
-#           - software-properties-common
-#         state: present
-
-#     - name: Add Docker GPG key
-#       apt_key:
-#         url: https://download.docker.com/linux/ubuntu/gpg
-#         state: present
-
-#     - name: Add Docker APT repository
-#       apt_repository:
-#         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-#         state: present
-
-
----
-- name: Install Docker and Docker Compose
-  hosts: 172.31.32.84
-  become: yes
-
+- hosts: 172.31.32.84
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: Install required packages
+    - name: Install Docker library
+      pip:
+        name: docker
+        state: present
+  
+  tasks:
+    - name: Install Docker dependencies
       apt:
         name:
           - apt-transport-https
@@ -44,41 +17,19 @@
           - curl
           - gnupg-agent
           - software-properties-common
-        update_cache: yes
+        state: present
 
     - name: Add Docker GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker repository
+    - name: Add Docker APT repository
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
 
-    - name: Install Docker
-      apt:
-        name: docker-ce
-        state: present
 
-    - name: Add user to the docker group
-      user:
-        name: "{{ ansible_user }}"
-        groups: docker
-        append: yes
-
-    - name: Install pip
-      apt:
-        name: python3-pip
-        update_cache: yes
-
-    - name: Install Docker Compose with pip
-      pip:
-        name: docker-compose
-        executable: pip3
-
-    - name: Print Docker Compose version
-      command: docker-compose version
 
 
      
