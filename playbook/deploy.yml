@@ -29,22 +29,22 @@
         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
 
-    - name: Install Docker
-      apt:
-        name: docker-ce
-        state: present
-        
+    ---
     - name: Install Docker Compose
+      hosts: all
+      become: yes
+  
       tasks:
        - name: Install pip
-      apt:
-        name: python3-pip
-        update_cache: yes
+         apt:
+          name: python3-pip
+          update_cache: yes
 
-    - name: Install Docker Compose with pip
-      pip:
-        name: docker-compose
-        executable: pip3
+       - name: Install Docker Compose with pip
+         pip:
+          name: docker-compose
+          executable: pip3
+
 
 
      
