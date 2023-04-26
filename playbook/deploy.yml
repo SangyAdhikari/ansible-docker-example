@@ -1,4 +1,4 @@
-- hosts: 172.31.33.114
+- hosts: 172.31.32.84
   become: true
   vars:
     ansible_python_interpreter: /usr/bin/python3
