@@ -1,73 +1,25 @@
-
-- name: Docker
-- hosts: 172.31.32.84
-  become: true
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  tasks:
-    - name: Install Docker library
-      pip:
-        name: docker
-        state: present
-  
-  tasks:
-    - name: Install Docker dependencies
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg-agent
-          - software-properties-common
-        state: present
-
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker APT repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        state: present
 ---
-- name: Deploy and run React app
-  hosts: 172.31.32.84
-  become: true
+- name: Deploy React JS Application
+  hosts: webservers
+  remote_user: root
+  become: yes
+  
   vars:
-    app_name: my-react-app
+    app_name: docker-react
+    app_path: /var/www/html/{{ app_name }}
+    docker_compose_file: docker-compose.yml
   tasks:
-    - name: Clone React app from Git
+    - name: Clone Git Repository
       git:
         repo: https://github.com/SangyAdhikari/docker-react.git
-        dest: /root/{{ docker-react }}
+        dest: "{{ app_path }}"
         version: master
-      register: git_output
+      become: yes
+      
 
-    - name: Install Node.js and dependencies
-      apt:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - nodejs
-        - npm
-      register: apt_output
-
-    - name: Install React app dependencies
-      command: npm install
-      args:
-        chdir: /home/ubuntu/{{ docker-react }}
-
-    - name: Build React app
-      command: npm run build
-      args:
-        chdir: /root/{{ docker-react }}
-
-    - name: Run React app
-      command: npm run start
-      args:
-        chdir: /root/{{ docker-react }}/build
-
+    - name: Build and Run Docker Compose
+      command: docker-compose -f {{ app_path }}/{{ docker_compose_file }} up -d
+      become: yes
 
        
 
