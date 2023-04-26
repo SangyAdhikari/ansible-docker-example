@@ -1,4 +1,4 @@
----
+
 - name: Docker
 - hosts: 172.31.32.84
   become: true
@@ -30,13 +30,6 @@
       apt_repository:
         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
-
-
-
-
-     
-        
-
 ---
 - name: Deploy and run React app
   hosts: 172.31.32.84
