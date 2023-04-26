@@ -1,48 +1,86 @@
-- hosts: 172.31.32.84
-  become: true
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  tasks:
-    - name: Install Docker library
-      pip:
-        name: docker
-        state: present
+# - hosts: 172.31.32.84
+#   become: true
+#   vars:
+#     ansible_python_interpreter: /usr/bin/python3
+#   tasks:
+#     - name: Install Docker library
+#       pip:
+#         name: docker
+#         state: present
   
-  tasks:
-    - name: Install Docker dependencies
-      apt:
-        name:
-          - apt-transport-https
-          - ca-certificates
-          - curl
-          - gnupg-agent
-          - software-properties-common
-        state: present
+#   tasks:
+#     - name: Install Docker dependencies
+#       apt:
+#         name:
+#           - apt-transport-https
+#           - ca-certificates
+#           - curl
+#           - gnupg-agent
+#           - software-properties-common
+#         state: present
 
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+#     - name: Add Docker GPG key
+#       apt_key:
+#         url: https://download.docker.com/linux/ubuntu/gpg
+#         state: present
 
-    - name: Add Docker APT repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        state: present
+#     - name: Add Docker APT repository
+#       apt_repository:
+#         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+#         state: present
 
 
 
 
      
         
-    - name: Create Docker container
-      docker_container:
-        name: my-container
-        image: ubuntu
+#     - name: Create Docker container
+#       docker_container:
+#         name: my-container
+#         image: ubuntu
         
-        state: started
-        ports:
-          - "80:80"
-        command: /bin/bash -c "apt-get update && apt-get install -y nginx && echo 'Hello, World!' > /var/www/html/index.html && nginx -g 'daemon off;'"
+#         state: started
+#         ports:
+#           - "80:80"
+#         command: /bin/bash -c "apt-get update && apt-get install -y nginx && echo 'Hello, World!' > /var/www/html/index.html && nginx -g 'daemon off;'"
+---
+- name: Deploy and run React app
+  hosts: 172.31.32.84
+  become: true
+  vars:
+    app_name: my-react-app
+  tasks:
+    - name: Clone React app from Git
+      git:
+        repo: https://github.com/SangyAdhikari/docker-react.git
+        dest: /root/{{ docker-react }}
+        version: master
+      register: git_output
+
+    - name: Install Node.js and dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+      register: apt_output
+
+    - name: Install React app dependencies
+      command: npm install
+      args:
+        chdir: /home/ubuntu/{{ docker-react }}
+
+    - name: Build React app
+      command: npm run build
+      args:
+        chdir: /root/{{ docker-react }}
+
+    - name: Run React app
+      command: npm run start
+      args:
+        chdir: /root/{{ docker-react }}/build
+
 
        
 
