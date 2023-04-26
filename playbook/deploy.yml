@@ -1,33 +1,33 @@
-# - hosts: 172.31.32.84
-#   become: true
-#   vars:
-#     ansible_python_interpreter: /usr/bin/python3
-#   tasks:
-#     - name: Install Docker library
-#       pip:
-#         name: docker
-#         state: present
+- hosts: 172.31.32.84
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install Docker library
+      pip:
+        name: docker
+        state: present
   
-#   tasks:
-#     - name: Install Docker dependencies
-#       apt:
-#         name:
-#           - apt-transport-https
-#           - ca-certificates
-#           - curl
-#           - gnupg-agent
-#           - software-properties-common
-#         state: present
+  tasks:
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+        state: present
 
-#     - name: Add Docker GPG key
-#       apt_key:
-#         url: https://download.docker.com/linux/ubuntu/gpg
-#         state: present
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
 
-#     - name: Add Docker APT repository
-#       apt_repository:
-#         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-#         state: present
+    - name: Add Docker APT repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
 
 
 
