@@ -1,6 +1,6 @@
 ---
 - name: Deploy React JS Application
-  hosts: webservers
+  hosts: 172.31.32.84
   remote_user: root
   become: yes
   
